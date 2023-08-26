@@ -2,6 +2,20 @@
 <head>
 <meta http-equiv="Content-Language" content="ja">
 <title>Characters</title>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var textarea = document.getElementById("textarea");
+
+    // 获取 URL 中的锚点部分
+    var hash = window.location.hash;
+
+    // 去除 # 号并填入 textarea
+    if (hash) {
+        var textAfterHash = hash.substring(1); // 去除 # 号
+        textarea.value = textAfterHash;
+    }
+});
+</script>
 <style type="text/css">
 @font-face{font-family:"Times";src:url(fonts/TH-Times.ttf);}
 @font-face{font-family:"Hancom";src:url(fonts/Hancom.ttf);}
@@ -51,7 +65,7 @@ Welcome to the Character Displayer! Discriptions are at the end of the page.<br>
 <font style="font-size: 20px">
 Please insert the glyphs in the following textarea.<br>
 </font>
-<textarea rows="30" cols="40"></textarea>
+<textarea id='textarea' rows="30" cols="40"></textarea>
 </p>
 <p align="left">
 This is a page which can show all the characters in Unicode.<br><br>
