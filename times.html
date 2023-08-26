@@ -1,0 +1,829 @@
+<html lang="zh-cn">
+<head>
+<title>TH-Times核心说明书</title>
+<script>
+function start()
+{
+var year=new Date().getUTCFullYear()
+var month=new Date().getUTCMonth()+1
+var date=new Date().getUTCDate()
+var day=new Date().getUTCDay()
+var week=new Array()
+week[0]="星期日"
+week[1]="星期一"
+week[2]="星期二"
+week[3]="星期三"
+week[4]="星期四"
+week[5]="星期五"
+week[6]="星期六"
+var hour=new Date().getUTCHours()
+var minute=new Date().getUTCMinutes()
+var second=new Date().getUTCSeconds()
+var millisecond=new Date().getUTCMilliseconds()
+var decisecond=(millisecond-millisecond%200)/100
+hour=hour+8
+if(hour>=24){hour=hour-24;day=day+1;date=date+1}
+if(day==7){day=0}
+if(date==32){date=1;month=month+1}
+if(date==31 && month==4){date=1;month=5}
+if(date==31 && month==6){date=1;month=7}
+if(date==31 && month==9){date=1;month=10}
+if(date==31 && month==11){date=1;month=12}
+if(date==29 && month==2 && year%4!=0){date=1;month=3}
+if(date==30 && month==2 && year%4==0){date=1;month=3}
+if(month==13){month=1;year=year+1}
+if(hour<10){hour="0"+hour}
+if(minute<10){minute="0"+minute}
+if(second<10){second="0"+second}
+setTimeout("start()",100)
+document.getElementById("time").innerHTML=("&#29616;在是公元"+year+"年"+month+"月"+date+"日 "+week[day]+" 北京&#26102;&#38388;"+hour+":"+minute+":"+second+"."+decisecond)
+}
+</script>
+<style>
+@font-face {
+  font-family: 'TH-Times';
+  src: url('/fonts/TH-Times.ttf') format('truetype');
+}
+
+.custom-font {
+  font-family: 'TH-Times', sans-serif;
+}
+</style>
+</head>
+<td class="custom-font" style="font-size: 24pt;">TH-Fonts</td>
+<body background="../Background.png" onload="start()">
+<font face="SimSun">
+<div style="float:left; width:180px">
+<img src="../Logo.png" width=180px height=180px>
+&#23548;航
+<table border="1" width="100%"><tr><td>
+<a href="../Simplified.html">主&#39029;</a><br>
+<a href="../Simplified/thanks.html">&#40483;&#35874;</a><br>
+<a href="../Simplified/download.html">下载页</a>
+</td></tr></table>
+其他&#35821;言
+<table border="1" width="100%"><tr><td>
+(不存在)
+</td></tr></table>
+有疑&#38382;？
+<table border="1" width="100%"><tr><td>
+<a href="../Simplified/Contact.html">&#32852;系我&#20204;</a>
+</td></tr></table>
+其他
+<table border="1" width="100%"><tr><td>
+<a href="../Simplified/Time.html">世界时间</a>
+</td></tr></table>
+</div>
+<div style="position:absolute;left:200px;top:0px">
+<div id="time" align="right"></div>
+<font size=5>TH-Times核心说明书</font>
+<hr>
+<font size=4>此页面用于详解TH-Tshyn(天珩全字库)中所附带的专用于复杂文本处理的字体TH-Times。字库可于本站下载页下载。</font><br><br>
+目录(链接仅用于快速定位)
+<table border="1" width="300px"><tr><td>
+<a href="#0">§0 基本说明</a><br>
+<a href="#1">§1 字体分支</a><br>
+<a href="#2">§2 字库logo</a><br>
+<a href="#3">§3 拉丁、希腊、西里尔、科普特</a><br>
+　　3.1 连字<br>
+　　3.2 零宽附标<br>
+　　3.3 环绕附标<br>
+　　3.4 本地化字形<br>
+<a href="#4">§4 五度标记法声调符号</a><br>
+<a href="#5">§5 传统蒙文</a><br>
+<a href="#6">§6 老回鹘文</a><br>
+<a href="#7">§7 假名与汉文</a><br>
+　　7.1 埼玉市地名字形<br>
+　　7.2 冲绳语假名<br>
+　　7.3 浊点附标<br>
+　　7.4 小假名<br>
+　　7.5 私用区<br>
+　　7.6 汉文训读<br>
+<a href="#8">§8 注音符号</a><br>
+<a href="#9">§9 藏文</a><br>
+<a href="#10">§10 标准化变体序列与彩色字体</a><br>
+　　10.1 中日韩标点符号<br>
+　　10.2 彩色字体<br>
+<i><font color=gray>§11~§1020 保留</font></i><br>
+<a href="#1021">§1021 未来计划</a><br>
+<a href="#1022">§1022 字体中的未定义码位</a><br>
+　　1022.1 中日韩部首补充<br>
+　　1022.2 小假名增补<br>
+　　1022.3 数学用字母数字符号<br>
+<a href="#1023">§1023 手机端的安装建议</a>
+</td></tr></table><br>
+
+<a name="0"><font size=4>§0 基本说明</font></a>
+<hr>
+　　TH-Tshyn一向致力于及时将全Unicode的字符统统收入，但由于中日韩的文字需要耗费大量的时间精力，导致对于复杂文本的处理，在2021年8月发布的3.1.0版本引入TH-Times之前一直处于空白状态，只是机械地如CodeCharts一般一个码位对应一个字形——我们一般将其戏称为“萝卜坑情结”，来源于证明整数与自然数一样多的时候常用的“一个萝卜一个坑”的证明方法。当然，作者深知这个做法是错误的，因此在有了一些时间之后动手制作了TH-Times——而更多的使用字库的“中日韩领域”的用户由于习惯了汉字本身的“萝卜坑”属性，根本连复杂文本是什么、需要做什么处理都不知道，这也是很可悲的一件事儿。只有将所有复杂文本都能够正确变形了，TH-Tshyn才算完成了“真正意义上的支持全Unicode”，而这还任重道远。<br>
+　　以下文本将分多条叙述目前TH-Times对部分复杂文本的支持情况，并提供字体测试。在测试位置会给出TH-Times当前的变形，标注出这是“符合Unicode所定义的正确变形”(简写：正确)、“暂时与Unicode所定义的变形不符的错误变形”(如果条件允许，将在日后及时修正；简写：错误)、“Unicode并未明确定义对应序列的变形，只是字体中的de facto实现”(简写：自由)。<br>
+　　TH-Times以Times New Roman 7.01为蓝本进行修改而得，<font color=red><b>属非盈利、学习研究型，不制作或出售任何商业作品。字形版权非字库作者所有。若有任何人以本字库的名义收取任何费用，本字库作者不承担任何连带责任。</b></font>各个区块儿对应的字形来源将会在以下文本中分条叙述。版本号继承自原Times New Roman，故与TH-Tshyn并不同步。在TH-Tshyn的3.1.0版本中所带的TH-Times为7.02版；在TH-Tshyn的4.0.0版本中所带的TH-Times为7.03版。<br>
+<br>
+
+<a name="1"><font size=4>§1 字体分支</font></a>
+<hr>
+　　TH-Times自7.03版起默认为ttc(TrueType Collection)格式，其中带有四个子字体，分别为“TH-Times”、“TH-Times_telex”、“TH-Times_grek”与“TH-Times_cyrl”。其中，“TH-Times”字体为该字体集的原版，自本页面第2章起所有叙述均为该字体的叙述。“TH-Times_telex”字体在原版的基础上增加了“输入越南语telex转写或输入带数字调的汉语拼音，自动变形为对应的越南语音节或带上标声调的汉语拼音”功能；“TH-Times_grek”字体在原版的基础上增加了“输入拉丁字母显示在一定转写规则下的希腊字母”功能；“TH-Times_cyrl”字体在原版的基础上增加了“输入拉丁字母显示在一定转写规则下的西里尔字母”功能。除附加功能外，支持的字符及字符的变形均完全相同。<br>
+　　经测试，在Win8.1的Word2013环境下(为严谨起见，未做测试的环境在此处不作评论)，ttc格式的字体会使字体的各种变形失效，将其拆分为ttf之后重新安装便能正常变形，作者暂不知其缘故。若在有使用需求的情况下遇到相同或相似的问题，可尝试自行使用工具将ttc拆分、卸载原来安装的ttc并重新安装ttf。<br>
+<br>
+
+<a name="2"><font size=4>§2 字库logo</font></a>
+<hr>
+　　在TH-Times中存在六种不同字母系统下的字库logo，其分别为拉丁字母、希腊字母、西里尔字母、传统蒙文、假名、注音符号。一种字母系统可能对应许多种不同的语言(例如拉丁字母可以对应英语、法语、德语等)，但只会选择其中一种最有代表性的语言制作logo，如传统蒙文选择蒙古语而非锡伯语、假名选择日语而非阿伊努语，等等。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>文种/语言</td>
+	</tr>
+	<tr>
+		<td><img src="Times/THFonts.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">TH-Fonts</font></td>
+		<td>自由</td>
+		<td>拉丁字母/英语</td>
+	</tr>
+	<tr>
+		<td><img src="Times/TCGrammatoseires.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">ΤΧ-Γραμματοσειρές</font></td>
+		<td>自由</td>
+		<td>希腊字母/希腊语</td>
+	</tr>
+	<tr>
+		<td><img src="Times/THShrifti.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">ТХ-Шрифты</font></td>
+		<td>自由</td>
+		<td>西里尔字母/俄语</td>
+	</tr>
+	<tr>
+		<td><img src="Times/TiyanHengFonc.png"></td>
+		<td><font face=TH-Times style="font-size:24pt; writing-mode:vertical-lr">ᠲᠢᠶᠠᠨ᠊ᠾᠧᠩ ᠹᠣᠨᠼ</font></td>
+		<td>自由</td>
+		<td>传统蒙文/蒙古语</td>
+	</tr>
+	<tr>
+		<td><img src="Times/ChonHyonFontsu.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">チョンヒョンフォンツ</font></td>
+		<td>自由</td>
+		<td>假名/日语</td>
+	</tr>
+	<tr>
+		<td><img src="Times/TianHengZiKu.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">ㄊㄧㄢㄏㄥㄗㄎㄨ</font></td>
+		<td>自由</td>
+		<td>注音符号/汉语普通话</td>
+	</tr>
+</table>
+　　需要注意的是，如果您的浏览器不支持彩色字体，在正确安装TH-Times之后上述logo均将显示为黑白样式。有关彩色字体的其它说明，详见彩色字体章节。<br>
+<br>
+
+<a name="3"><font size=4>§3 拉丁、希腊、西里尔、科普特</font></a>
+<hr>
+　　字体中支持Unicode15.0中定义的所有拉丁字母、希腊字母、西里尔字母和科普特字母。科普特字母字形来自CodeCharts(含希腊字母区块儿的10个科普特字母)；拉丁字母、希腊字母与西里尔字母主要来源于原Times New Roman，并作出少量修改和增补，有零星一部分字形来自CodeCharts。<br>
+<br><b>3.1 连字</b><br>
+　　字体中存在两种连字。一种在默认条件下直接生成连字，若需断开连字需手动插入Zero Width Non-Joiner(码位为U+200C，以下简称ZWNJ)；另一种在默认条件下不生成连字，若需连字需手动插入Zero Width Joiner(码位为U+200D，以下简称ZWJ)。连字是铅字时代的遗留产物，以“fi”组合最为常见，由于f的头部与i的点经常会相撞，当年的活字会将fi合起来做成一个字模。默认生成连字的情况也分两种，一种是两个字母的连字，有ct、fi、fj、fl、Qu、st、ſt、Th、στ组合及这些字母的衍生字母组合(如fí、Qù等)；另一种是无限个字母的连字，当拉丁字母f和t连续出现时，或希腊字母τ连续出现时，便能无限相连。<br>
+　　从严格意义上来说，分属一个复合词的两部分的字母不应当连字，如英语offline的fl、mistake的st；德语Schifffahrt的后两个f、Auflauf的fl等等，此时需手动插入ZWNJ，因为字体内部不可能内置所有语言的复合词词库进行判断；但在并没有如此严格要求的场合下，即便连字也无大碍。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试内容</td>
+	</tr>
+	<tr>
+		<td><img src="Times/first.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">first</font></td>
+		<td>自由</td>
+		<td>fi、st的连字</td>
+	</tr>
+	<tr>
+		<td><img src="Times/fisica.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">física</font></td>
+		<td>自由</td>
+		<td>fí的连字</td>
+	</tr>
+	<tr>
+		<td><img src="Times/schifffahrt.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">Schiff‌fahrt</font></td>
+		<td>自由</td>
+		<td>ff的连字、断字</td>
+	</tr>
+	<tr>
+		<td><img src="Times/schiessplatz.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">Schieſ‍splat‍z</font></td>
+		<td>自由</td>
+		<td>带有ZWJ的ſs、tz的连字</td>
+	</tr>
+</table>
+<br><b>3.2 零宽附标</b><br>
+　　零宽附标即non-spacing mark。在Unicode中，并非所有带有附标的字母均存在单独的码位——因为这样不经济，会浪费很多位置，且可扩展性弱。现存的预组合字母一般是为了兼容早期的已有字符集不得不收录，或是早期技术并不是很发达的年代无法实现附标的正确归位而不得已收录的。例如汉语拼音方案中单元音ê的四个声调就只有ế和ề具有单独码位，并且它们的存在并非源于汉语拼音，而是源于越南语国语字，只是碰巧同形。<br>
+　　在字体中，零宽附标也是很忌讳“萝卜坑情结”的，如果只是单纯地把附标做成一个没有宽度的字形，并不能把附标很好地放到前一个字母上应该在的位置，这是因为，第一点，在比例字体中字母的宽度不是固定的；第二点，字母的高度更不是固定的。因此需要根据不同的字母把附标放到不同的相对位置上去。而在附标之上叠加附标则更忌讳“萝卜坑情结”。Unicode中收录了许多各种各样的附标，并且每次更新都有可能增加新的附标。在Unicode的核心规约中也定义了这些附标的实现原则，而市面上的字体暂且不说附标收得全不全、能不能及时更新，就连已经收了的附标都有一部分不能很好地按定义准确归位。我们并不希望核心规约所定义的实现原则只是一种“可望而不可及的理论”，将其真正实现才是应该做的。<br>
+　　需要注意的是，附标的归位除了需要依赖字体中的代码外，还需依赖软件或系统所带的变形引擎。对于一些较近收入Unicode的字符，在较旧的软件或系统上，即使有了合适的字体，仍有可能不能正常变形。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试内容</td>
+	</tr>
+	<tr>
+		<td><img src="Times/inio.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">i̐˞ N̡̄ ᴉ̤̈ ō͘</font></td>
+		<td>正确</td>
+		<td>普通附标归位</td>
+	</tr>
+	<tr>
+		<td><img src="Times/uiui.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">ú͡i u͡͏́i</font></td>
+		<td>正确</td>
+		<td>CGJ的附标结合作用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/juju.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">j+ü᪻̄=jū</font></td>
+		<td>正确</td>
+		<td>括号附标</td>
+	</tr>
+	<tr>
+		<td><img src="Times/nnnnga.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">nnᷠ᪻ᷠ᪻᪻ᷠ᪻᪻᪻ᷠ᪻᪻᪻᪻ᷠ᪻᪻᪻ᷠ᪻᪻ᷠ᪻ᷠn ŋ᪽᪽᪽᪽ ⲁ⳱⳰⃐</font></td>
+		<td>正确</td>
+		<td>附标的双向叠加</td>
+	</tr>
+</table>
+　　零宽附标主要为结合到字母上方和下方的两种。在一般的变形引擎下，无论以什么顺序输入，在变形前都会被预处理成先下方附标后上方附标的顺序。此时附标的叠加不会受到任何的影响。但是也有部分变形引擎并不会对附标进行重新排序，若此时上下方的附标交替输入，附标并不会如预期般正常叠加。这是目前字体已知的一个bug，是因MarkAttachmentType不支持在多个组中重复使用一个字形而作出的妥协，下版本将将其换为UseMarkFilteringSet，可妥善解决该问题。<br>
+<br><b>3.3 环绕附标</b><br>
+　　环绕附标即enclosing mark，其本身带有宽度，并且基底字母会受到其影响而移动一段距离。在常规条件下，左至右排列的文本中出现在右边的字符不可能给出现在左边的字符的左边添加宽度，因此这需要字体中代码的配合才能实现，也必须抛弃“萝卜坑情结”。理论上，环绕附标也允许无限叠加，但在实际操作时，环绕附标的叠加除了移动位置外，不同层的附标大小也应当不同(例如方块儿外部套圆圈儿和圆圈儿外部套方块儿肯定不能是一样的效果)，这需要占用字体内的字形，实际实现时总会存在上限。在TH-Times中，此类附标被设定为只能加一层，若输入多个则会以“虚线圈外部套环绕附标”的字形作为提示出现在整个“基底+第一层环绕附标”的序列之后。这在理论上是一种“错误”，但考虑其实际使用价值和技术限制，不得已才作出妥协。但是在第一层环绕附标的前后输入零宽附标时两种附标都能够正常变形。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试内容</td>
+	</tr>
+	<tr>
+		<td><img src="Times/alyus.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">A⃢ λ⃠ ю⃞ Ϣ⃣</font></td>
+		<td>正确</td>
+		<td>普通环绕附标归位</td>
+	</tr>
+	<tr>
+		<td><img src="Times/abvgd.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">а҈ б҉ в꙰ г꙱ д꙲</font></td>
+		<td>正确</td>
+		<td>计数用环绕附标归位</td>
+	</tr>
+	<tr>
+		<td><img src="Times/icshch.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">І⃣ Ц⃣ Щ⃣</font></td>
+		<td>正确</td>
+		<td>环绕附标宽度自适应</td>
+	</tr>
+	<tr>
+		<td><img src="Times/ia.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">ɨ̃᪾ a⃠͊</font></td>
+		<td>正确</td>
+		<td>环绕附标与零宽附标的组合使用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/aa.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">A⃝A͏⃝</font></td>
+		<td>自由</td>
+		<td>环绕附标所组成的合字</td>
+	</tr>
+	<tr>
+		<td><img src="Times/o.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">o⃤⃤⃤</font></td>
+		<td>错误</td>
+		<td>环绕附标叠加</td>
+	</tr>
+</table>
+<br><b>3.4 本地化字形</b><br>
+　　对于同一个码位的字符，在不同的地区也存在着不同的写法。TH-Times中，拉丁字母部分针对土耳其语、立陶宛语和简体中文的环境做了本地化字形。土耳其语与立陶宛语均为字母i上添加附标时上方的点儿不消失(与i相关的预组合字母也适用，例如土耳其语的“rahîm”一词，若放置于土耳其语的环境下，则î将带点儿；原Times New Roman并未对í以外的预组合字母进行本地化，这是错误的)。简体中文为汉语拼音中带声调的字母a由双层变为单层，但不带调的a不受影响，若欲使用不带调的单层a，请使用U+0251。<br>
+　　若在土耳其语或立陶宛语语言环境下欲使用不带点儿的i与附标的组合，请将附标置于U+0131之上；若在简体中文环境下欲使用带汉语拼音中的声调的双层a，请使用a+CGJ(U+034F)+相应零宽附标的序列。此处CGJ的用途为阻挡变形引擎在变形前预处理时自动将a与附标标准化为预组合的码位。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试环境</td>
+	</tr>
+	<tr>
+		<td><img src="Times/rahimen.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="en">rahîm</font></td>
+		<td>正确</td>
+		<td>英语</td>
+	</tr>
+	<tr>
+		<td><img src="Times/rahimtr.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="tr">rahîm</font></td>
+		<td>正确</td>
+		<td>土耳其语</td>
+	</tr>
+	<tr>
+		<td><img src="Times/aaaaen.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="en">ā á ǎ à</font></td>
+		<td>正确</td>
+		<td>英语</td>
+	</tr>
+	<tr>
+		<td><img src="Times/aaaacn.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="zh-cn">ā á ǎ à</font></td>
+		<td>正确</td>
+		<td>简体中文</td>
+	</tr>
+</table>
+<br>
+
+<a name="4"><font size=4>§4 五度标记法声调符号</font></a>
+<hr>
+　　五度标记法的声调符号位于U+02E5~U+02E9(杆位于右侧，一般用于标记原调)和U+A712~U+A716(杆位于左侧，一般用于标记变调)。在Unicode核心规约中只给出了两个字符以及三个字符的连字的例子；但声调语言的声调结构并不一定都是简单到只用三个以内的相对高低就能描述清楚的，在不与核心规约的定义产生冲突的前提下，为以防万一，字体中直接做了无限个字符的连字，理论上只要不在中间换行就能够一直连下去。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试内容</td>
+	</tr>
+	<tr>
+		<td><img src="Times/righttone.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">˥˩˨˦˧˥˩˨˦˧˥˩˨˦˧</font></td>
+		<td>自由</td>
+		<td>右杆声调无限相连</td>
+	</tr>
+	<tr>
+		<td><img src="Times/lefttone.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">꜔꜓꜕꜖꜒꜔꜓꜕꜖꜒꜔꜓꜕꜖꜒</font></td>
+		<td>自由</td>
+		<td>左杆声调无限相连</td>
+	</tr>
+</table>
+　　需要注意的是，如果您的字体显示为15根完全断开的杆，这是绝对错误的；如果为部分相连或是有规律地两个一组，这是实现了一部分功能，但实现不全面的；如果三个三个相连为5组，这符合核心规约中的定义，即使与TH-Times不同也不能说是一种“错误”。<br>
+<br>
+
+<a name="5"><font size=4>§5 传统蒙文</font></a>
+<hr>
+　　传统蒙文区块儿中同时收录了胡都木蒙文、托忒蒙文、锡伯文、满文和阿礼嘎礼。该区块儿的变形异常复杂，且各家的方案仍争论不休。TH-Times中的传统蒙文区块儿字形来自Mongolian Baiti，并根据Unicode标准增补了数个该字体暂未支持的字母、对部分变形加以适当修改。由于各家的方案争论不休，各家的字体的变形也存在各种不统一的情况，因此下文将列出作者在将Mongolian Baiti的字形和变形规则引入TH-Times后作出的一些主要修改，以及目前存在的一些问题(将在下一版本解决)，以供使用者参考。<br>
+　　在蒙文与满文的单独音节中，辅音后的圆唇元音原则上不向右钩(若为横排则为不向上钩，此处按习惯默认竖排，下同；阳性元音字肚不出头，阴性元音向下出头)。如今变形规则较为成熟的民委方案亦作如此规定，因此字体中将其作出调整，若欲用向右钩的字形请手动添加FVS。但这也引来了新的问题，蒙文中，作为单词的附加成分的du/dü等，应当默认使用向右钩的字形，调整时无意将其忘记，下版本将修正之。<br>
+　　蒙文中“元音+i”与“元音+yi”存在最小对立，如saiqan与sayiqan，此时y不应为无向上钩的长牙，否则将混淆。除附加成分中的yin外，将所有出现于i前的y改作带钩的字形。(备注：元音后的定格助词编码为yin是否合适作者保留意见，但目前主流的方案为yin，因此字体不得不照顾到已有的使用情况，此处不作更改)<br>
+　　取消蒙文“ɣ在s/d之后去掉双点”的规则。写作sq/dq而读作sɣ/tɣ是蒙语在发展过程中的一个普通的音变，而蒙语的各类音变纷繁复杂，甚至还有写作u/ü读作i或读作ai/ei的情况，即使蒙文区块儿的编码模型为音码，在编码时不应参考口语的实际读音，而应按书面语处理。更何况蒙文也存在书面语本就是sɣ/dɣ的情况，将sq/dq编码为sɣ/dɣ而将原来的sɣ/dɣ编码为带FVS的形式并不合适。另，“写作dq，读作tɣ，而编码作dɣ”本身也是一种不合理的“缝合怪模式”。<br>
+　　调整代码中连字的非强制部分的执行顺序，使原本有而实际无法被执行的连字(例如-ŋn-、-gl-等)得以支持，使行文更加美观。调整阿礼嘎礼的音节ŋa的字形，使其能够正常连接。<br>
+　　调整蒙文音节末且处于辅音或词首e后的d的默认字形，使d与on/un/ön/ün得以区分。经过核实，无论是固有词中的拟声词，还是外来词，凡是符合以上音节结构的情况，d都不会写成一个字肚加一个短牙(词中)或一个字肚加一个右尾(词尾)的字形，因其确有区分需求，本着“尽可能少用FVS”的思想，将其修改。若在此欲使用一个字肚加一个短牙或一个字肚加一个右尾的字形，请手动添加FVS。<br>
+　　将Narrow No-Break Space(U+202F，以下简称NNBSP)的功能合并至MVS中。为兼容已有文本和旧方案，NNBSP的功能仍保留；但由于在许多系统上因字体fallback机制导致NNBSP在蒙文等文本中并不能正常作用于附加成分的变形，且其用途与MVS互补，无冲突，许多专家一致认为将NNBSP的功能合并至蒙文区块儿内部的MVS上能够有效解决变形问题，也因此TH-Times同时支持使用NNBSP或使用MVS添加附加成分。<br>
+　　修正满文中i于元音后出现时的默认字形(应为双长牙，而原字体中变为锡伯式的一短牙一长牙)。<br>
+　　完成阿礼嘎礼中baluda附标的归位。<br>
+　　删除变形代码中的语言特定部分。在Word等环境下并无“满语”之类的选项，而在自动检测得到的“蒙古语”环境下，满文等无法正确变形。由于区块儿内并不存在同样的序列在不同的语言环境下变形不同的情况，因此取消该部分代码并无影响。<br>
+　　根据民委方案增补三个在目前的蒙文正字法用不到、但在历史上出现过的变体，其分别为i/u/ü作为附加成分时左方带点儿的字形。(备注：按历史文献，此类字形只出现于以n结尾的单词之后，作者认为附加成分的元音上带的点应分析到n上作为n的变体而非分析到元音上，但民委方案认为应分析到元音上，为兼容民委方案中所出现过的所有单个字形，故将其引入)<br>
+　　字体目前仍存在一些其它问题，例如满文中的阴性h+第六元音的组合，在历史上也曾出现，在Mongolian Baiti中有合字但无映射，下一版本的TH-Times将会加入。该类组合目前存在两种编码方案，一种是用普通的h通过加FVS切换，另一种是用外来词专用的h直接加元音后变形(因为外来词专用的gkh在被创造出时只用于a或o之前，并不存在冲突)，两套方案均将被收入。另，当前的最新版Mongolian Baiti将蒙文d单独出现时变形成为其词首形(即同t)而非保留其名义字形。这会对使用者造成迷惑。经确认，无论是Win8.1中自带的旧版Mongolian Baiti，还是民委方案，均不存在d单独出现时变形的规则，至于最新版Mongolian Baiti为何加入此规则，暂无确切说法，下一版本的TH-Times将删除之。<br>
+　　同时，为兼顾民委方案，下一版本的TH-Times将在尽量少改动Mongolian Baiti的原有变形的情况下，适量增补民委方案中出现的各种变体序列。此举将涉及除阿礼嘎礼外的区块儿内所有字符，包含但不限于目前暂未作出任何改动的托忒蒙文和锡伯文字符。<br>
+　　由于传统蒙文为连写体，同一个字母在单词的不同位置出现时存在不同的写法，蒙文区块儿的变形除字体中的代码外依赖于系统的变形引擎。在Unicode11.0中加入的U+1878与在Unicode14.0中加入的U+180F在目前的许多系统上仍不被支持，此时即便字体中有正确的代码也无法完成变形。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试内容</td>
+	</tr>
+	<tr>
+		<td><img src="Times/bichin.png"></td>
+		<td><font face=TH-Times style="font-size:24pt; writing-mode:vertical-lr">ᠪᠢᡸᠢᠨ</font></td>
+		<td>正确</td>
+		<td>U+1878能否为变形引擎所支持</td>
+	</tr>
+	<tr>
+		<td><img src="Times/go.png"></td>
+		<td><font face=TH-Times style="font-size:24pt; writing-mode:vertical-lr">ᡬᢅᠣ</font></td>
+		<td>正确</td>
+		<td>baluda附标归位</td>
+	</tr>
+</table>
+<br>
+
+<a name="6"><font size=4>§6 老回鹘文</font></a>
+<hr>
+　　老回鹘文即Old Uyghur区块儿。该字母系统为传统蒙文的前身，曾被提案作为传统蒙文区块儿已有的字符的FVS和SVS加入Unicode，后被否决，于Unicode14.0单独设区。其书写方向为右至左，与与其同源的阿拉伯字母相同。由于其与传统蒙文的关系，作者将传统蒙文区块儿中对应的同源字母的字形旋转180度并稍作变动后直接作为该区块儿的字形使用——这是不合理的做法，就如同给小篆加上宋体的衬线一般，下版本将会改进。当时用此做法只是为了方便写变形代码、测试在各个环境下的运作情况。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试内容</td>
+	</tr>
+	<tr>
+		<td><img src="Times/pysyn.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">𐽼𐽶𐽽𐾅𐽶𐽺</font></td>
+		<td>错误</td>
+		<td>变形连接方向、连字方向、附标归位</td>
+	</tr>
+</table>
+　　需要注意的是，表格中变形类型“错误”的原因上文有提到，但若安装TH-Times后您的浏览器仍显示与预期字形不符，这不是字体的问题，而是您的系统的变形引擎暂不支持此类变形。虽然该区块儿所在区间早已被划定为右至左文本专用，但据目前所掌握的信息，安卓系统在变形时无论是首中尾字形的连接，还是强制连字，即便其字符显示方向为右至左、字体代码中也设置了右至左，变形方向仍为左至右，导致各种变形错误。<br>
+<br>
+
+<a name="7"><font size=4>§7 假名与汉文</font></a>
+<hr>
+　　假名在Unicode中分布于多个区块儿，除最常用的平假名区块儿、片假名区块儿外，还有阿伊努语小假名区块儿、假名扩展、小假名增补、半角片假名等。TH-Times中的假名字形主要来源于三番明朝(其修改自IPA明朝，对部分假名的细节处理做了调整，详见<a href="http://www.akenotsuki.com/eyeben/">http://www.akenotsuki.com/eyeben/</a>)，并据此适当修改、增补了一些字形。此外，台湾语假名的声调符号字形来自CodeCharts。<br>
+<br><b>7.1 埼玉市地名字形</b><br>
+　　平假名的sa在一般情况下，写作两画或三画均可(且手写常常作三画，即右至左的运笔处断开)，而埼玉县埼玉市(日语：<font face="MS Mincho" lang="ja-jp">埼玉県さいたま市</font>)为了“营造统一感”，其官方规定，在写地名时必须采用两画的字形。在他们的官方文件中也能看到普通的sa写作三画与地名的sa写作两画同框出现的例子。因此在字体中，特地添加了当sa出现在地名中时由三画变成两画的变形功能。当然，在非正式的场合，用三画的sa书写该地名严格意义上也不能算“错误”，但是这是“不够规范的”。若该序列出现在了实际非该地名的词组中，欲切换回三画，请使用ZWNJ阻隔之。字体测试表格请见本章节末尾。<br>
+<br><b>7.2 冲绳语假名</b><br>
+　　冲绳语假名，为船津好明以普通的平假名为原型发明的一套专用于记录冲绳语(首里方言)中特殊的音节的假名方案。例如音节ti，在日语中常写作片假名大写te+小写i的组合，而在冲绳语假名中，即为平假名te与i的合字。由于ti在日语中一般用于记录外来语词汇，故一般使用片假名，对应的平假名序列并无太大的实际意义，此处正好能够借来以连字的方式直接实现为对应的冲绳语假名而不对日语文本产生较大影响。音节ʔwi、ʔwe原为平假名u与wi、we的合字，但平假名的小写wi、we码位处于扩展区，许多系统的变形引擎并不支持其连字，且输入也较为不便，因此实现为平假名u与小写i、e的序列。带有喉塞音的拨音使用促音+拨音的序列。与拉丁字母章节的连字部分所述相同地，若欲断开连字，请插入ZWNJ阻隔之。附带说明：字体中假名区块儿也存在数个需要手动插入ZWJ才能连成合字的情况(此与冲绳语假名无关)。字体测试表格请见本章节末尾。<br>
+<br><b>7.3 浊点附标</b><br>
+　　在平假名区块儿中存在两个零宽附标，分别为浊音点和半浊音点，其主要用于与假名结合，但也可与其它文种结合(因其Script属Inherited，所以序列符合规范，与注音符号的结合也存在用例，字体中的该部分实现详见注音符号章节)，且不存在多个浊点叠加的情况，理论上只要给字形做成零宽即可在绝大部分情况下正确归位。但是对于小假名而言，位于高处的大浊点并不美观；对于部分右上角被占用的大假名而言，直接将浊点加到右上角的固定位置也会造成重叠甚至穿插，这时候，为了美观起见，仍需调整其大小与位置。字体测试表格请见本章节末尾。<br>
+<br><b>7.4 小假名</b><br>
+　　除散落在基本的平假名、片假名区块儿的小假名与阿伊努语使用的小假名区块儿外，在第1平面的小假名增补区块儿亦有一些小假名。小假名增补区块儿的来源最早可追溯至2016年字库作者以《广辞苑》中的文本提交小写wi和we的提案，随后引来数位日本专家用早年的文献和外国地图上的音译文本提交了许多各式各样的小假名，但至今小假名增补区块儿的绝大多数码位都处于暂时予以保留的状态，截至Unicode15.0，真正加入Unicode的只有9个。由于带浊点的假名能通过零宽附标的方式实现，在如今的技术条件下不可能再予以分配单独码位，对于普通的小假名，结合已经分配的码位和已经加入Unicode的假名，容易推算出所有暂未收录的小假名在小假名增补区块儿理应所在的位置——Unicode15.0新增的两个小假名也证实了推算的正确性。故，即使CodeCharts中暂未有部分小假名的身影，字体中也已经在推算的码位上收录了所有应有的小假名。这些码位只有可能在日后新增对应的假名，不可能作其它用途也不可能临时更换策略收录其它假名，因此提前加入字库并无影响。下表将列出Unicode中所有小假名所在的码位(包括推算的部分；表格中所列为对应的大假名，防止因未安装或无法安装字库导致无法显示)：
+<font face="MS Mincho" lang="ja-jp">
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td align=right>U+</td>
+		<td>0</td><td>1</td><td>2</td><td>3</td>
+		<td>4</td><td>5</td><td>6</td><td>7</td>
+		<td>8</td><td>9</td><td>A</td><td>B</td>
+		<td>C</td><td>D</td><td>E</td><td>F</td>
+	</tr>
+	<tr>
+		<td align=right>304x</td>
+		<td></td><td>あ</td><td></td><td>い</td>
+		<td></td><td>う</td><td></td><td>え</td>
+		<td></td><td>お</td><td></td><td></td>
+		<td></td><td></td><td></td><td></td>
+	</tr>
+	<tr>
+		<td align=right>306x</td>
+		<td></td><td></td><td></td><td>つ</td>
+		<td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td>
+	</tr>
+	<tr>
+		<td align=right>308x</td>
+		<td></td><td></td><td></td><td>や</td>
+		<td></td><td>ゆ</td><td></td><td>よ</td>
+		<td></td><td></td><td></td><td></td>
+		<td></td><td></td><td>わ</td><td></td>
+	</tr>
+	<tr>
+		<td align=right>309x</td>
+		<td></td><td></td><td></td><td></td>
+		<td></td><td>か</td><td>け</td><td></td>
+		<td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td>
+	</tr>
+	<tr>
+		<td align=right>30Ax</td>
+		<td></td><td>ア</td><td></td><td>イ</td>
+		<td></td><td>ウ</td><td></td><td>エ</td>
+		<td></td><td>オ</td><td></td><td></td>
+		<td></td><td></td><td></td><td></td>
+	</tr>
+	<tr>
+		<td align=right>30Cx</td>
+		<td></td><td></td><td></td><td>ツ</td>
+		<td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td>
+	</tr>
+	<tr>
+		<td align=right>30Ex</td>
+		<td></td><td></td><td></td><td>ヤ</td>
+		<td></td><td>ユ</td><td></td><td>ヨ</td>
+		<td></td><td></td><td></td><td></td>
+		<td></td><td></td><td>ワ</td><td></td>
+	</tr>
+	<tr>
+		<td align=right>30Fx</td>
+		<td></td><td></td><td></td><td></td>
+		<td></td><td>カ</td><td>ケ</td><td></td>
+		<td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td>
+	</tr>
+	<tr>
+		<td align=right>31Fx</td>
+		<td>ク</td><td>シ</td><td>ス</td><td>ト</td>
+		<td>ヌ</td><td>ハ</td><td>ヒ</td><td>フ</td>
+		<td>ヘ</td><td>ホ</td><td>ム</td><td>ラ</td>
+		<td>リ</td><td>ル</td><td>レ</td><td>ロ</td>
+	</tr>
+	<tr>
+		<td align=right>1B13x</td>
+		<td>き</td><td>く</td><td>こ</td><td>さ</td>
+		<td>し</td><td>す</td><td>せ</td><td>そ</td>
+		<td>た</td><td>ち</td><td>て</td><td>と</td>
+		<td>な</td><td>に</td><td>ぬ</td><td>ね</td>
+	</tr>
+	<tr>
+		<td align=right>1B14x</td>
+		<td>の</td><td>は</td><td>ひ</td><td>ふ</td>
+		<td>へ</td><td>ほ</td><td>ま</td><td>み</td>
+		<td>む</td><td>め</td><td>も</td><td>ら</td>
+		<td>り</td><td>る</td><td>れ</td><td>ろ</td>
+	</tr>
+	<tr>
+		<td align=right>1B15x</td>
+		<td>ゐ</td><td>ゑ</td><td>を</td><td>ん</td>
+		<td>キ</td><td>コ</td><td>サ</td><td>セ</td>
+		<td>ソ</td><td>タ</td><td>チ</td><td>テ</td>
+		<td>ナ</td><td>ニ</td><td>ネ</td><td>ノ</td>
+	</tr>
+	<tr>
+		<td align=right>1B16x</td>
+		<td>マ</td><td>ミ</td><td>メ</td><td>モ</td>
+		<td>ヰ</td><td>ヱ</td><td>ヲ</td><td>ン</td>
+		<td></td><td></td><td></td><td></td>
+		<td></td><td></td><td></td><td></td>
+	</tr>
+</table>
+</font>
+<br><b>7.5 私用区</b><br>
+　　早在3.0.0版本的字库中，增补私用平面B(即第16平面)的U+1017E0~U+10183F这96个码位上已被安放了96个假名。4.0.0版本在U+101840~U+10185F新加入了32个假名，并同时引入TH-Times。这些假名中有小写的wi和we(在其正式获得Unicode编码前便已加入字库，为兼容旧版本，这些码位暂不撤除，并且保留仍存在其他用途，详见下文)、较常用的带浊点的预组合假名与台湾语假名。<br>
+　　除小写的wi和we外，在输入符合Unicode标准的序列时，也会调用这些被安放至私用区的预组合字形。台湾语假名的上加横线为U+0305、下加圆点为U+0323，均可组合输入。但在部分程序中并不支持组合，此时便可选择私用区的码位作为备用。此外，在纵向排版时，一般默认将文字也旋转90度，而汉字、假名等字符是不旋转的，这需要程序或系统有对应的文件对每一个码位属于哪种类型作出规范，而Unicode中新加入的字符甚至新加入的区块儿在一些较旧的软件中往往无法被识别。例如在Word2013中，标准码位的小写wi和we在纵向排版时仍会被旋转90度，这是我们不想看到的，此时若使用私用区的码位代替之，便可达到想要实现的效果——当然，私用区的码位在使用的时候需谨慎，因为Unicode并不对该区块儿的任何码位作出任何定义，完全由用户自行规定，如若将Word导出为PDF，那么使用私用区的码位是完全没有问题的；但如若需将Word格式的文档直接传送给他人，请切记，除非告知对方安装对应字库，否则不要使用私用区的码位。<br>
+<br><b>7.6 汉文训读</b><br>
+　　汉文训读体的文本在竖排时一般在汉字的左下方标返点(必选)、在右下方标送假名和虚词(可选)，而横排时往往会将返点标至汉字右下方、送假名和虚词标至右上方。目前许多字体的汉文返点区块儿的字形均做在了右上方，这是不符合习惯的。此外，送假名和虚词虽然不是必选项，但是在许多地方也是会出现的，目前Unicode并未给“片假名的上标形式”专开区块儿收录，因此为了在纯文本中能支持汉文训读体的文本，字体针对片假名做了一些de facto的实现——若是在富文本中自然无此需求，但富文本也不需要将返点单独收录，直接用对应的汉字下标(若是竖排则为左标)即可，既然返点开了区块儿单独收录，甚至前些年还有提案要增加新的返点用于欧文训读，那么作者认为，在纯文本中支持片假名的上标是有必要的。<br>
+　　由于需要上标的假名出现的环境不固定(有些出现在返点之后，有些出现在汉字之后；并且返点的Script属于Common，其在变形时会继承前方汉字的Han属性)，因此无法直接通过上下文判定是否需要返点；故字库采用“片假名+Zero Width Space(码位为U+200B，以下简称ZWSP)”的序列进行实现。在上标的片假名之后出现的片假名理论上会默认自动变为上标，但若变形引擎未对其作出支持，请再次手动插入ZWSP。在返点之后出现的上标假名应和返点对齐，因此假名需缩进一个半角字符的宽度，若变形引擎未对其作出支持，请在返点之后插入ZWSP以手动调整对齐。理论上ZWSP插到假名或返点之前更符合直觉，但考虑到换行会中断上下文的检测，一个零宽的字符很容易留在行尾，故采用放到后方的方案实现。此实现方式不会对正常的日语文本产生任何影响，因普通的日语文本中没有使用零宽空格的需求。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试内容</td>
+	</tr>
+	<tr>
+		<td><img src="Times/saitama.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="ja-jp"><font face="MS Mincho">小</font>さい‌たま<br>ごを<font face="MS Mincho">持</font>って<br>さいたまに<br><font face="MS Mincho">来</font>てください</font></td>
+		<td>自由</td>
+		<td>平假名sa的笔画数</td>
+	</tr>
+	<tr>
+		<td><img src="Times/ucinaa.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="ja-jp">てぃんさぐぬ<font face="MS Mincho">花</font><br>ふゎむれーうた</font></td>
+		<td>自由</td>
+		<td>冲绳语假名</td>
+	</tr>
+	<tr>
+		<td><img src="Times/kuteifu.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="ja-jp">く゚ て゚ ィ゙ ㇷ゚</font></td>
+		<td>正确</td>
+		<td>浊点附标归位</td>
+	</tr>
+	<tr>
+		<td><img src="Times/kanbun.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="ja-jp"><font face="MS Mincho">楚人</font>ニ​<font face="MS Mincho">有</font>㆘​リ​<font face="MS Mincho">鬻</font>㆓​グ​<br><font face="MS Mincho">盾</font>ト​<font face="MS Mincho">与</font>㆒㆑​ヲ​<font face="MS Mincho">矛者</font>㆖</font></td>
+		<td>自由</td>
+		<td>汉文训读假名上标</td>
+	</tr>
+</table>
+　　注：由于TH-Times中并未收录中日韩越统一表意文字，所以字体测试表格中的汉字字体与预期字形列的图片有出入的可能，属正常现象。<br>
+<br>
+
+<a name="8"><font size=4>§8 注音符号</font></a>
+<hr>
+　　即使在一般的宋体/明体中，按习惯注音符号也会被做成楷体的样式；但在TH-Times中，所有注音符号均被宋体化——这只是风格的差异，并无对错之分。拼接注音符号所用到的笔画来源于思源宋体。<br>
+　　对于汉语普通话中所用得到的声韵母的注音符号，字体默认采用了拼合的方式以方块字的视觉效果显示每一个音节。若需阻断拼合，请手动插入ZWNJ。同时，由于汉语普通话所用的注音符号上也常常会加上声调，因此拉丁字母章节中所述的所有附标也能对注音符号进行使用，包括零宽附标和环绕附标。<br>
+　　除汉语普通话与老国音所能用到的声韵母外，注音符号区块儿中还收录了闽南语与粤语所使用的符号。但仍有一些其它方言所采用的注音符号方案中的字符暂未加入Unicode。部分存在塞音清浊送气三对立的方言的注音符号方案中，出现了用不送气清音的符号加浊音点表示浊音的方案，因此，注音符号也能同浊点附标一同使用。<br>
+　　按中国大陆的习惯，在横排时韵母i通常写作一竖；然而在竖排时，或在台湾地区，其通常写作一横。因此字体中也对此做了本地化处理。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试内容</td>
+		<td>测试环境</td>
+	</tr>
+	<tr>
+		<td><img src="Times/rzcxbs.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">ㄖㄣ́ㄓ̄ㄔㄨ̄ㄒㄧㄥ̀ㄅㄣ̌ㄕㄢ̀</font></td>
+		<td>自由</td>
+		<td>音节合字</td>
+		<td>通用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/duang.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">ㄉㄨㄤㄉㄨㄤ⃞ㄉㄨㄤ</font></td>
+		<td>正确</td>
+		<td>环绕附标归位</td>
+		<td>通用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/bjshh.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">ㄅ゙ ㄐ゙ ㄕ゙ ㄏ゙</font></td>
+		<td>正确</td>
+		<td>浊点附标归位</td>
+		<td>通用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/tiandicn.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="zh-cn">ㄊ‌ㄧ‌ㄢ ㄉ‌ㄧˋ</font></td>
+		<td>正确</td>
+		<td>本地化</td>
+		<td>简体中文</td>
+	</tr>
+	<tr>
+		<td><img src="Times/tianditw.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="zh-tw">ㄊ‌ㄧ‌ㄢ ㄉ‌ㄧˋ</font></td>
+		<td>正确</td>
+		<td>本地化</td>
+		<td>繁体中文</td>
+	</tr>
+</table>
+　　注：环绕附标归位的测试中，变形类型的“正确”仅指附标归位的变形，注音符号本身的音节拼合应当属于“自由”。<br>
+<br>
+
+<a name="9"><font size=4>§9 藏文</font></a>
+<hr>
+　　TH-Times中的藏文区块儿字形来源于Microsoft Himalaya，并修正巴尔蒂语所使用的扩展字母的变形(原字体中未对这些字母作出任何的变形)、修正并同时适配在多种不同的变形引擎下藏文数字加占星术附标U+0F3E、U+0F3F时的字形的视觉效果(部分系统下不变形，即附标完全在数字右侧；部分系统下变形过度，即附标完全在数字左侧；部分系统下变形符合规范，即左附标位于左侧、右附标位于右侧)。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试内容</td>
+	</tr>
+	<tr>
+		<td><img src="Times/intexaab.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">ཨིན་ཏེ་ཁཱ༹བ།</font></td>
+		<td>正确</td>
+		<td>巴尔蒂语扩展字母变形</td>
+	</tr>
+	<tr>
+		<td><img src="Times/astrological.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">༢༿༾</font></td>
+		<td>正确</td>
+		<td>数字加占星术附标</td>
+	</tr>
+</table>
+<br>
+
+<a name="10"><font size=4>§10 标准化变体序列与彩色字体</font></a>
+<hr>
+　　标准化变体序列，即Standardized Variation Sequence，简称SVS，为一个普通字符和一个变体选择符(Variation Selector，简称VS)所构成的序列。该类序列由两部分组成，一部分与emoji无关，其定义可见于CodeCharts或Unicode数据库中的StandardizedVariants.txt，理论上其所使用的VS范围为U+FE00~U+FE0D，但截至Unicode15.0，实际只有U+FE00~U+FE02正式投入使用；另一类与emoji有关，其定义可见于Unicode数据库中的emoji-variation-sequences.txt，其规定为在字符后添加U+FE0E表示普通文本样式、添加U+FE0F表示emoji样式，而具体字形则不作规定，只要在符合描述的范围内(例如不能把笑脸做成哭脸等等)各家可自由发挥。<br>
+　　在TH-Times中，目前支持Mathematical、Mathematical alphabet script variants、East Asian punctuation positional variants分类下所有被定义的标准化变体序列。Myanmar、Phags-pa、Manichaean、Egyptian hieroglyph rotational variants、Egyptian hieroglyph expanded variants分类下的序列将在日后对应区块儿加入TH-Times时同步加入。CJK compatibility ideographs分类下的序列无加入TH-Times的计划，因为TH-Times不将支持中日韩越统一表意文字区块儿的任何内容，该些区块儿由各分支字库承担，将逐渐支持各地的地区字形标准。Mongolian分类下的序列字体亦支持，其虽然在该数据库中，但并非使用VS的序列，故此处不作过多提及，相应内容见传统蒙文章节。<br>
+<br><b>10.1 中日韩标点符号</b><br>
+　　标点符号的书写规范各地的规定并不相同。句号等中国大陆标准中常书于左下角(竖排则为右上角)的标点符号，在港台地区则为居中书写，在日韩地区同中国大陆；感叹号等中国大陆标准中常居左书写(竖排则为居右)的标点符号，在港台地区与日韩地区均为居中书写。有时在纯文本中有必要两种情况同时出现，此时并无法直接进行本地化，因此小林剑博士(Dr. Ken Lunde)提出将此类标点符号的位置加入标准化变体序列，通过控制字符可手动控制标点符号的书写位置，并得到通过。字体中，同时支持使用变体序列调整位置和使用本地化调整位置两方案。本地化只会调整默认情况，即不添加VS时；添加VS后本地化自动失效。<br>
+　　此外，中国大陆所使用的弯引号也是长期以来存在争议的话题。有人认为，位于General Punctuation区块儿的弯引号(单引号U+2018与U+2019；双引号U+201C与U+201D)为“西文引号”，中文亦使用该些码位属于“寄人篱下”。这是不对的。除了专门标明是中日韩所使用的标点符号外，其他标点符号从来只区分“全半角”而不区分“中西文”。还有人认为，西文使用的引号是不区分前后的U+0027和U+0022(即俗称的“傻瓜引号”)，位于General Punctuation区块儿的弯引号就是给中文用的，这更是错误的。ASCII中只存在一种引号是打字机时代的历史遗留问题，早期的打字机甚至没有数字0和1，直接用大写字母O和I代替；而西文中所使用的弯引号确实与中文所使用的弯引号占了相同的码位。另，西文中也存在各式各样的引号，如德语使用类似逗号的写法(单引号即为一个，双引号即为两个)作为前引号，而使用与中文前引号相似的写法作为后引号(使用同一码位)。傻瓜引号存在半角和全角两个码位是因为对应的字符集存在，Unicode的本意便是兼容各地区各种各样的字符集来达到防止乱码的目的，便于信息交换。而区分“全角弯引号”与“半角弯引号”的字符集从未存在过，因此分开收录的想法是不可能通过的，也是多余的。<br>
+　　但在实际使用中，其字形确有区分的必要。将全角引号置于西文中，或将变宽/半角引号置于中文中，都是极其不美观的。大家平日所使用的手机字体，一般调用顺序西文字体在前、中文字体在后，导致中文文本中的引号常显示为变宽引号，这也引起了部分人的不适。小林剑博士曾提出给引号亦提供标准化变体序列来手动切换样式(见<a href="http://www.unicode.org/L2/L2014/14006-sv-western-vs-cjk.pdf">http://www.unicode.org/L2/L2014/14006-sv-western-vs-cjk.pdf</a>)，虽未曾通过，但字体中也引入了这个方法进行手动切换。应对不添加VS的普通文本时，字体将默认字形设为中文的全角引号，若语言环境为西文，或前后存在西文字符，则通过字体中的代码自动变为西文的变宽引号，这种方式能够解决绝大部分引号所出现的场合。VS主要用于控制中文文本中出现西文字符或西文文本中出现中文字符的特殊情况。<br>
+　　对于两个连续出现的全角标点符号，若满足“前者的右半部分(若为竖排则为下半部分)为空，而后者的左半部分(若为竖排则为上半部分)为空”，则进行标点挤压，减少半个全角字符的宽度。过多的余白会让版面显得不美观，而绝大多数纯文本环境并不会主动提供标点挤压，因此字体也给出了最基本的挤压的实现。只需满足上述条件便会挤压，无论是否添加VS。但挤压需依赖变形引擎，部分变形引擎并不支持挤压，即使字体中存在代码也无法实现。<br>
+　　标点符号目前仍存在有一些问题。字体中，若全角问号或感叹号连续出现时，每两个将生成连字(双问号U+2047、问号感叹号U+2048、感叹号问号U+2049、双感叹号U+203C)。在简体中文环境下并不存在视觉上不美观的问题，只是此时的问号或感叹号不再每一个单独占用一个全角字符的宽度，但此连写规定亦符合中小学作文方格纸的书写规范，并无影响；但在繁体中文或日韩语的环境下，由于单个的问号或感叹号居中书写，若连续使用奇数个问号或感叹号，其显示效果将变为不等距(即最后一个落单的符号与前方的符号间多出了四分之一个全角字符的宽度)。将在下版本修复。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试内容</td>
+		<td>测试环境</td>
+	</tr>
+	<tr>
+		<td><img src="Times/eee.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">0 0︀ ∅︀ ∅ ℰ︀ ℰ︁ ℰ</font></td>
+		<td>正确</td>
+		<td>数学相关SVS</td>
+		<td>通用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/shesaidokay.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">She said, “Okay.”<br><font face=SimSun>她说</font>：“<font face=SimSun>好的</font>。”</font></td>
+		<td>正确</td>
+		<td>引号自动变形、标点挤压</td>
+		<td>通用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/aaaa.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">あ，︀あ，︁ア、︀ア、︁</font></td>
+		<td>正确</td>
+		<td>标点符号SVS</td>
+		<td>通用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/wenzicn.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="zh-cn"><font face=SimSun>文字</font>，<font face=SimSun>文字</font>、</font></td>
+		<td>正确</td>
+		<td>标点符号本地化</td>
+		<td>简体中文</td>
+	</tr>
+	<tr>
+		<td><img src="Times/wenzitw.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="zh-tw"><font face=MingLiU>文字</font>，<font face=MingLiU>文字</font>、</font></td>
+		<td>正确</td>
+		<td>标点符号本地化</td>
+		<td>繁体中文</td>
+	</tr>
+</table>
+　　注：由于TH-Times中并未收录中日韩越统一表意文字，所以字体测试表格中的汉字字体与预期字形列的图片有出入的可能，属正常现象。<br>
+<br><b>10.2 彩色字体</b><br>
+　　由于历史原因，目前存在多种彩色字体格式，有微软提出的COLR/CPAL表对、Adobe和火狐联合提出的SVG表、谷歌提出的CBDT/CBLC表对和苹果提出的SBIX表。较为流行的格式为后两种，因安卓与苹果的流行而流行，但利用这些表的字体在Windows上却根本无法读取，并且这些表内嵌入的是png格式的点阵图，放大会失真。自Win10的某个版本起所支持的彩色字体便是第一种格式，这种格式在较新的安卓系统上也能被支持，稍旧一些的安卓系统便只有部分软件能够读取其彩色部分，而无法读取彩色部分也不影响字体能够被正常读取，只是字形会变成黑白字形。COLR/CPAL表对所使用的技术为拆解字形并分别上色，故支持矢量，放大不会失真，能够与非彩色的字符完美融合在各个环境中；只是因为其需拆解字形的缘故，越是丰富的颜色就需要越多的字形，而字体本身存在65535字形的限制，故此类字体的颜色将会偏单调一些，一般也不太会有渐变效果。<br>
+　　TH-Times中所采用的彩色字体格式便是微软提出的COLR/CPAL表对。字体中包含一小部分的emoji，凡是字体中收录并且在Unicode的emoji数据库中存在的字符，一律制作了彩色字形(尽管有些偏黑色的字形看上去仍像是黑白，但在指定文本颜色时还是能看出不同)。这其中，若是不在emoji-variation-sequences.txt中所定义的，即不区分文本样式和emoji样式的字符，不得不处理成彩色；在emoji-variation-sequences.txt中所定义的字符按使用需求，酌情将部分字符的默认字形处理成彩色、另一部分处理成黑白，但都能够通过手动添加VS的方式在两者之间切换。由于emoji的制作难度相对较高，故短时间内TH-Times无法支持全部emoji，但会以支持全部为目标逐渐添加。<br>
+　　除第二章节所提到的字库logo与emoji之外，TH-Times还对另一些字符制作了彩色字形，目前有日本将棋、麻将牌、多米诺骨牌、扑克牌(包含塔罗牌)和中国象棋(同时针对韩国将棋棋子做了本地化处理)。<br>
+　　日本将棋棋子字符本身属于emoji，本就应当做彩色；但棋子上并没有字。有字的棋子在Unicode中没有任何单独码位，也没有任何明文的定义，一般的做法应当是用“棋子字符+对应汉字”的形式呈现，但一来TH-Times无添加汉字的计划，二来棋子放置在前方其在变形时的Script可能受前方字符影响而导致变形失败，因此选择了“棋子英文名(King、Rook、Bishop、Gold、Silver、kNight、Lance、Pawn)缩写+棋子字符”的呈现方式。小写字母表示普通棋子，大写字母表示升级棋子；特殊地，小写k表示“王将”，大写K表示“玉将”，这是双方同一个棋子的不同名字，不表示升级。<br>
+　　麻将牌区块儿原本只有红中存在emoji样式，但所有麻将牌均做成彩色显然是更合理的做法。并且字体中还针对日本麻将的白板与一条的字形做了本地化，但受变形引擎的限制，在日语环境下往往也无法变成对应的字形，若需手动切换，可在麻将牌字符后加入Tags区块儿(U+E0000~U+E007F)的J、P，并以CANCEL TAG(U+E007F)结尾，经测试在多数环境下能成功切换。若在日语环境下默认能变为日本字形，而欲手动切回 ，可手动添加Tags区块儿的C、N，同样以CANCEL TAG结尾便可。日麻中还存在多种红宝牌，常见的为点数为五的三种数牌，但实际上所有奇数数牌均存在红宝牌的形式，甚至连白板也存在，字体对这些特殊牌均提供了支持，对应序列为“原麻将牌+ZWJ+红色方块儿(U+1F7E5)”。若您的环境不支持彩色字体，显示为黑白时，红宝牌的图案上将会多出一个小圆点儿以示区分。在富文本中，非日语环境下日麻的本地化字形也可用ss01调出、红宝牌也可用ss02调出。<br>
+　　调用中国象棋区块儿的韩式本地化字形方法与日麻类似，可切换语言环境，可使用Tags区块儿的K、R，也可用ss01。下表为字体测试用表：<br>
+<table border="1" style="margin: 0 auto">
+	<tr>
+		<td>预期字形</td>
+		<td>您的浏览器</td>
+		<td>变形类型</td>
+		<td>测试内容</td>
+		<td>测试环境</td>
+	</tr>
+	<tr>
+		<td><img src="Times/emojivar.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">⭐︎⭐️ ㊙︎㊙️ 🀄︎🀄️</font></td>
+		<td>正确</td>
+		<td>emoji相关SVS</td>
+		<td>通用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/emojiseq.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">#️⃣ 2️⃣</font></td>
+		<td>正确</td>
+		<td>emoji序列</td>
+		<td>通用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/shogi.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">R☖ n☖ k⛉ P⛉</font></td>
+		<td>自由</td>
+		<td>将棋序列</td>
+		<td>通用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/nonemojicolr.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">🀝‍🟥 🀢 🂁 🂡 🩬</font></td>
+		<td>自由</td>
+		<td>非emoji彩色字符</td>
+		<td>通用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/mahjongtags.png"></td>
+		<td><font face=TH-Times style="font-size:24pt">🀆󠁊󠁐󠁿 🀐󠁊󠁐󠁿 🩠󠁋󠁒󠁿 🩩󠁋󠁒󠁿</font></td>
+		<td>自由</td>
+		<td>Tags</td>
+		<td>通用</td>
+	</tr>
+	<tr>
+		<td><img src="Times/mahjongcn.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="zh-cn">🀆 🀐 🩠 🩩</font></td>
+		<td>自由</td>
+		<td>本地化</td>
+		<td>简体中文</td>
+	</tr>
+	<tr>
+		<td><img src="Times/mahjongjp.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="ja-jp">🀆 🀐 🩠 🩩</font></td>
+		<td>自由</td>
+		<td>本地化</td>
+		<td>日语</td>
+	</tr>
+	<tr>
+		<td><img src="Times/mahjongkr.png"></td>
+		<td><font face=TH-Times style="font-size:24pt" lang="ko-kr">🀆 🀐 🩠 🩩</font></td>
+		<td>自由</td>
+		<td>本地化</td>
+		<td>韩语</td>
+	</tr>
+</table>
+<br>
+
+<a name="1021"><font size=4>§1021 未来计划</font></a>
+<hr>
+　　除上文中提到将要修改的内容外，下版本将补全阿拉伯文区块儿、修正哈萨克文音码模型的变形规则，并适量增补emoji。若时间充裕，将对婆罗米系文字作出整理，确保于其它已存在的区块儿无隐患、无明显错误变形且字符数量全后引入字体。若在使用时有发现任何文种的变形错误情况，再次确认非因变形引擎不支持而是纯粹字体中代码有误后，通过本站联系页所留的联系方式尽早告知作者，若问题属实，将及时修复并予以感谢。<br>
+<br>
+
+<a name="1022"><font size=4>§1022 字体中的未定义码位</font></a>
+<hr>
+　　存在一些Unicode仍作保留而字体中已经存在字形的码位。目前这些码位主要由三个部分构成，按码位顺序为中日韩部首补充、小假名增补、数学用字母数字符号。<br>
+<br><b>1022.1 中日韩部首补充</b><br>
+　　目前的中日韩部首补充区块儿(U+2E80~U+2EFF)存在一个“怪异”的情况，即一系列已定义的码位中间有一个码位被跳过了。通过查阅早期资料(见<a href="http://std.dkuug.dk/jtc1/sc2/wg2/docs/n1923.pdf">http://std.dkuug.dk/jtc1/sc2/wg2/docs/n1923.pdf</a>)可知，该码位应为作为部首使用的“无”字，且竖弯钩需与横相接触。当时在此处挖空给出的理由是“在康熙部首区已经存在，这是个重复部首”。然而，康熙部首区存在的“長”和“鬼”在部首增补区依然能够存在，究其原因，是由于字形存在细微差异，部首增补区的字形偏新字形(長字竖提相连、鬼字竖撇相连)而康熙部首区的字形偏旧字形(長字竖提分离、鬼字竖撇分离)。这样看来，“无”也并非重复，康熙部首区的字形竖弯钩并未与横接触。作者计划向Unicode申请将这个码位填补回，不知是否能够成功。而字体中先将这个字形加入的原因是因为既“有据可循”，又“这个码位即使保留也不可能用作其它用途”。<br>
+<br><b>1022.2 小假名增补</b><br>
+　　小假名增补区块儿位于U+1B130~U+1B16F，具体请见假名章节的相关内容。<br>
+<br><b>1022.3 数学用字母数字符号</b><br>
+　　数学用字母数字符号区块儿(U+1D400~U+1D7FF)中也存在着数十个“洞”，其原因是这些字符在字母式符号区块儿(U+2100~U+214F)已经收录，而出于区块儿收字的规律性，这些码位被跳过。在CodeCharts中也用箭头明确注明了每个被跳过的码位其“理应”安放什么字符、这个字符当前在什么位置上，可以知道的是，这些码位由于“被注释定义过”，因此理论上也将不再使用，而字体中加入的原因，则是在不会出现混乱的前提下既“有据可循”，又“出于规律性”——毕竟字体能不能显示是字体的事情，而用户用哪一个码位不是字体本身所能决定的。这些未定义的码位自然不推荐去使用，但万一出现“由于规律性导致错误使用”的状况，作为一种提示存在也未尝不可。<br>
+<br>
+
+<a name="1023"><font size=4>§1023 手机端的安装建议</font></a>
+<hr>
+　　在手机端安装字库的方法，下载页的手机字库一栏已给出链接，其中有详细说明。但说明中只给了可用于照猫画虎的方法，并未给出安装建议。目前已知的是，手机自带的字体即使非“萝卜坑字体”，但其支持的变形仍有限，上文中的字体测试表格即可说明许多问题。若将自带字体的调用顺序置于TH-Times之前，字库内的许多变形是无法被调出的——假设字库中有一个连字需要调用A和B两个字形，结果A出现在了系统自带的字体中，B没有，导致A调用了系统自带的字体而B调用了字库，这时显然无法连字。这也是许多设备上蒙古文的附加成分字形会出错的直接原因——U+202F优先调用了西文字体。同时这也是TH-Times欲把各文种的复杂变形集中到一个字体中的原因之一——另外的原因，例如上文中提到的弯引号问题，这些都是在跨字体时无力解决的，因此只有合并才是最优解。<br>
+　　简而言之，TH-Times应置于最先调用的位置，否则其存在完全没有意义。而其它字库或天珩全字库中的其它字体则建议置于最后调用的位置，防止其“萝卜坑字体”属性影响TH-Times中暂未支持、而系统自带字体已经提供支持的一些复杂文本的变形。如果想要让汉字部分也调用天珩字库，但苦于这个方法会使得基本汉字使用系统自带字体，请在确保您想要使用的字库已经置于系统调用的字体列表中后直接将系统自带的汉字字体删除即可。删前建议留备份。<br>
+<br>
+
+<hr>
+<div align=middle><font size=2>本页面最后修改于 公元2022年8月20日(星期六) 上午08:34 (UTC+8:00)</font></div>
+<br>
+</div>
+</font>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
