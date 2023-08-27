@@ -12,13 +12,22 @@ document.addEventListener("DOMContentLoaded", function() {
         textarea2.value = decodedText;
     }
 });
-document.getElementById("shareButton").addEventListener("click", function() {
+document.getElementById("shareButton1").addEventListener("click", function() {
     var textareaContent = document.getElementById("textarea1").value;
+    shareTextareaContent(textareaContent);
+});
+
+document.getElementById("shareButton2").addEventListener("click", function() {
+    var textareaContent = document.getElementById("textarea2").value;
+    shareTextareaContent(textareaContent);
+});
+
+function shareTextareaContent(content) {
     var currentURL = window.location.href.split('#')[0]; // Get the current URL without the hash
-    var shareLink = currentURL + "#" + encodeURIComponent(textareaContent);
+    var shareLink = currentURL + "#" + encodeURIComponent(content);
     copyToClipboard(shareLink);
     alert("已复制分享链接：" + shareLink);
-});
+}
 
 function copyToClipboard(text) {
     var tempInput = document.createElement("input");
@@ -28,11 +37,3 @@ function copyToClipboard(text) {
     document.execCommand("copy");
     document.body.removeChild(tempInput);
 }
-
-document.getElementById("shareButton2").addEventListener("click", function() {
-    var textareaContent = document.getElementById("textarea2").value;
-    var currentURL = window.location.href.split('#')[0]; // Get the current URL without the hash
-    var shareLink = currentURL + "#" + encodeURIComponent(textareaContent);
-    copyToClipboard(shareLink);
-    alert("已复制分享链接：" + shareLink);
-});
