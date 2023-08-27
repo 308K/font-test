@@ -2,7 +2,27 @@
 <head>
 <meta http-equiv="Content-Language" content="ja">
 <title>花园明朝</title>
-<script src="script.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var textarea = document.getElementById("textarea");
+
+    // 获取 URL 中的锚点部分
+    var hash = window.location.hash;
+
+    // 去除 # 号并填入 textarea
+    if (hash) {
+        var decodedText = decodeURIComponent(hash.substring(1)); // 去除 # 号并解码
+        textarea.value = decodedText;
+    }
+});
+const textarea = document.getElementById("textarea");
+const fontSizeSlider = document.getElementById("fontSizeSlider");
+
+fontSizeSlider.addEventListener("input", function() {
+  const selectedFontSize = fontSizeSlider.value;
+  textarea.style.fontSize = selectedFontSize + "px";
+});
+</script>
 <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body style="font-size: 16px;padding: 0;margin: 4px;letter-spacing: 0px">
@@ -10,8 +30,8 @@
 <font style="font-size: 20px">
 Please insert the glyphs in the following textarea.<br>
 </font>
-<input type="range" id="fontSizeSlider" min="20" max="60" value="40">
-<textarea id='textarea2'></textarea>
+<input type="range" id="fontSizeSlider" min="20" max="80" value="40">
+<textarea id='textarea'></textarea>
 </p>
 <p align="left">
 This is a page which can show all the characters in Unicode.<br><br>
