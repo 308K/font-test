@@ -4,7 +4,7 @@
 <title>天珩字库</title>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-    var textarea = document.getElementById("textarea");
+    var textarea = document.getElementById("textarea1");
 
     // 获取 URL 中的锚点部分
     var hash = window.location.hash;
@@ -12,15 +12,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // 去除 # 号并填入 textarea
     if (hash) {
         var decodedText = decodeURIComponent(hash.substring(1)); // 去除 # 号并解码
-        textarea.value = decodedText;
+        textarea1.value = decodedText;
     }
-});
-const textarea = document.getElementById("textarea");
-const fontSizeSlider = document.getElementById("fontSizeSlider");
-
-fontSizeSlider.addEventListener("input", function() {
-  const selectedFontSize = fontSizeSlider.value;
-  textarea.style.fontSize = selectedFontSize + "px";
 });
 </script>
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -30,8 +23,7 @@ fontSizeSlider.addEventListener("input", function() {
 <font style="font-size: 20px">
 Please insert the glyphs in the following textarea.<br>
 </font>
-<input type="range" id="fontSizeSlider" min="20" max="80" value="40">
-<textarea id='textarea'></textarea>
+<textarea id='textarea1'></textarea>
 </p>
 <p align="left">
 This is a page which can show all the characters in Unicode.<br><br>

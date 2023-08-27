@@ -23,11 +23,7 @@ body{font-size: 16px;padding: 0;margin: 4px;letter-spacing: 0px;}
     height: 50vh; /* 使用视口高度的百分比单位 */
     font-size: 16px;
   }
-  
-  #fontSizeSlider {
-    width: 100%;
-    margin-top: 10px;
-  }
+
   #textarea2 {
     font-family: Times, Hancom, A, B;
     width: 90%; /* 使用百分比来设置宽度 */
