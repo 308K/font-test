@@ -1,0 +1,36 @@
+@font-face{font-family:"Times";src:url(fonts/TH-Times.ttf);}
+@font-face{font-family:"Hancom";src:url(fonts/Hancom.ttf);}
+@font-face{font-family:"TH-P0";src:url(fonts/HanaMinA.ttf);}
+@font-face{font-family:"TH-P2";src:url(https://fonts.chiriri.top/HanaMinB.ttf);}
+@font-face{font-family:"TH-P3";src:url(https://fonts.chiriri.top/HanaMinB.ttf);}
+@font-face{font-family:"TH-P0";src:url(fonts/TH-Disp-P0.ttf);}
+@font-face{font-family:"TH-P2";src:url(fonts/TH-Disp-P2.ttf);}
+@font-face{font-family:"TH-P3";src:url(https://fonts.chiriri.top/TH-Disp-P3.ttf);}
+body{font-size: 16px;padding: 0;margin: 4px;letter-spacing: 0px;}
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #333;
+    color: #f0f0f0;
+  }
+  
+  a {
+    color: #DAA520;
+  }
+}
+#textarea1 {
+    font-family: Times, Hancom, TH-P0, TH-P2, TH-P3;
+    width: 90%; /* 使用百分比来设置宽度 */
+    height: 50vh; /* 使用视口高度的百分比单位 */
+    font-size: 16px;
+  }
+  
+  #fontSizeSlider {
+    width: 100%;
+    margin-top: 10px;
+  }
+  #textarea2 {
+    font-family: Times, Hancom, A, B;
+    width: 90%; /* 使用百分比来设置宽度 */
+    height: 50vh; /* 使用视口高度的百分比单位 */
+    font-size: 16px;
+  }

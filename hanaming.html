@@ -2,67 +2,16 @@
 <head>
 <meta http-equiv="Content-Language" content="ja">
 <title>花园明朝</title>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-    var textarea = document.getElementById("textarea");
-
-    // 获取 URL 中的锚点部分
-    var hash = window.location.hash;
-
-    // 去除 # 号并填入 textarea
-    if (hash) {
-        var decodedText = decodeURIComponent(hash.substring(1)); // 去除 # 号并解码
-        textarea.value = decodedText;
-    }
-});
-</script>
-<style type="text/css">
-@font-face{font-family:"Times";src:url(fonts/TH-Times.ttf);}
-@font-face{font-family:"Hancom";src:url(fonts/Hancom.ttf);}
-@font-face{font-family:"TH-P0";src:url(fonts/HanaMinA.ttf);}
-@font-face{font-family:"TH-P2";src:url(https://fonts.chiriri.top/HanaMinB.ttf);}
-@font-face{font-family:"TH-P3";src:url(https://fonts.chiriri.top/HanaMinB.ttf);}
-body{font-size: 16px;padding: 0;margin: 4px;letter-spacing: 0px;}
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #333;
-    color: #f0f0f0;
-  }
-  
-  a {
-    color: #DAA520;
-  }
-}
-  @media (max-width: 768px) {
-    /* 在较小的屏幕上调整样式 */
-    textarea {
-      font-size: 40px;
-      padding: 0;
-      margin: 2px;
-      letter-spacing: 0;
-      width: 100%;
-      box-sizing: border-box;
-    }
-  }
-
-  /* 默认样式 */
-  textarea {
-    font-family: Times, Hancom, TH-P0, TH-P2, TH-P3;
-    font-size: 40px;
-    padding: 0;
-    margin: 4px;
-    letter-spacing: 0;
-    width: auto;
-    box-sizing: content-box;
-  }
-</style>
+<script src="script.js"></script>
+<link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body style="font-size: 16px;padding: 0;margin: 4px;letter-spacing: 0px">
 <p align="center">
 <font style="font-size: 20px">
 Please insert the glyphs in the following textarea.<br>
 </font>
-<textarea id='textarea' rows="30" cols="40"></textarea>
+<input type="range" id="fontSizeSlider" min="20" max="60" value="40">
+<textarea id='textarea2'></textarea>
 </p>
 <p align="left">
 This is a page which can show all the characters in Unicode.<br><br>
