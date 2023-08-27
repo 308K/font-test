@@ -12,3 +12,27 @@ document.addEventListener("DOMContentLoaded", function() {
         textarea2.value = decodedText;
     }
 });
+document.getElementById("shareButton").addEventListener("click", function() {
+    var textareaContent = document.getElementById("textarea1").value;
+    var currentURL = window.location.href.split('#')[0]; // Get the current URL without the hash
+    var shareLink = currentURL + "#" + encodeURIComponent(textareaContent);
+    copyToClipboard(shareLink);
+    alert("已复制分享链接：" + shareLink);
+});
+
+function copyToClipboard(text) {
+    var tempInput = document.createElement("input");
+    document.body.appendChild(tempInput);
+    tempInput.value = text;
+    tempInput.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempInput);
+}
+
+document.getElementById("shareButton2").addEventListener("click", function() {
+    var textareaContent = document.getElementById("textarea2").value;
+    var currentURL = window.location.href.split('#')[0]; // Get the current URL without the hash
+    var shareLink = currentURL + "#" + encodeURIComponent(textareaContent);
+    copyToClipboard(shareLink);
+    alert("已复制分享链接：" + shareLink);
+});
