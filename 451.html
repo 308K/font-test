@@ -5,7 +5,7 @@
   <title>Error 451 - Unavailable For Legal Reasons</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Parisienne&family=Source+Code+Pro:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Liu+Jian+Mao+Cao&family=Lora:ital,wght@0,400..700;1,400..700&family=Noto+Serif+SC:wght@200..900&family=Parisienne&display=swap" rel="stylesheet">
   <style>
     body {
       background-color: #000;
@@ -15,7 +15,7 @@
       padding: 50px;
     }
     h1 {
-      font-family: "Source Code Pro", monospace;
+      font-family: "Google Sans Code", monospace;
       font-optical-sizing: auto;
       font-weight: 700;
       font-style: normal;
@@ -23,7 +23,7 @@
       margin-bottom: 30px;
     }
     p {
-      font-family: "Lora", serif;
+      font-family: "Lora", "Noto Serif SC", serif;
       font-optical-sizing: auto;
       font-weight: 400;
       font-style: normal;
@@ -31,7 +31,7 @@
       margin-bottom: 20px;
     }
     .italic {
-      font-family: "Parisienne", cursive;
+      font-family: "Parisienne", "Liu Jian Mao Cao", cursive;
       font-weight: 400;
       font-style: normal;
       font-size: 24px;
@@ -39,14 +39,18 @@
   </style>
 </head>
 <body>
-  <h1>Error 451</h1>
-  <p>Unavailable For Legal Reasons</p>
+  <h1 id="main-title">Error 451</h1>
+  <p id="subtitle">Unavailable For Legal Reasons</p>
   <p id="quote" class="italic"></p>
-  <p>Your HTTP request would have had been denied because our response and your thought itself might have had been wishing to have been about to be considering to have a border.</p>
+  <p id="footer-text">Your HTTP request would have had been denied because our response and your thought itself might have had been wishing to have been about to be considering to have a border.</p>
 
   <script>
-    // Array of Fahrenheit 451 quotes
-    var quotes = [
+    // English content
+    var en_title = "Error 451 - Unavailable For Legal Reasons";
+    var en_main_title = "Error 451";
+    var en_subtitle = "Unavailable For Legal Reasons";
+    var en_footer_text = "Your HTTP request would have had been denied because our response and your thought itself might have had been wishing to have been about to be considering to have a border.";
+    var en_quotes = [
       "A book is a loaded gun in the house next door. Burn it. Take the shot from the weapon. Breach man's mind.",
       "Stuff your eyes with wonder, live as if you'd drop dead in ten seconds. See the world. It's more fantastic than any dream made or paid for in factories.",
       "It was a pleasure to burn.",
@@ -57,6 +61,41 @@
       "Are you happy?",
       "The books are to remind us what asses and fools we are.",
     ];
+
+    // Chinese content
+    var zh_title = "错误451 - 因法律原因无法提供";
+    var zh_main_title = "错误 451";
+    var zh_subtitle = "因法律原因无法提供";
+    var zh_footer_text = "不是不响应您的请求，而是缓响应、慢响应、优响应，有次序地响应。让有能力的服务器先响应，让富裕的服务器先响应，才能先响应的服务器带动后响应的服务器，也要具体情况具体响应。不是盲目响应，而是精准响应，也要具体情况具体响应，做一个灵活响应服务器，择机响应！";
+    var zh_quotes = [
+      "书是邻居家上了膛的枪。烧了它。从武器上取下子弹。打开人类的心智。",
+      "让你的眼睛充满惊奇，像十秒后就会死去一样生活。看世界。它比任何工厂制造或支付的梦想都更奇妙。",
+      "燃烧是一种乐趣。",
+      "我们无法说出友谊形成的确切时刻。就像一滴一滴地装满容器，最后一滴使它溢出；在一系列的善举中，也终有一次让心灵溢出。",
+      "书中必有某些我们无法想象的东西，才能让一个女人待在着火的房子里；那里一定有什么。你不会无缘无故地留下。",
+      "如果你不想让一个人在政治上不快乐，就不要给他一个问题的两面去让他担心；给他一面。更好的是，什么都别给。",
+      "你需要的不是书，而是一些曾经在书里的东西…魔法只在于书中所言，它们如何将宇宙的碎片缝合成一件外衣给我们穿。",
+      "你幸福吗？",
+      "书是用来提醒我们自己是多么的愚蠢和傻。",
+    ];
+
+    // Language detection
+    var lang = navigator.language || navigator.userLanguage;
+    var quotes;
+
+    if (lang.startsWith('zh')) {
+      document.getElementById('title').innerHTML = zh_title;
+      document.getElementById('main-title').innerHTML = zh_main_title;
+      document.getElementById('subtitle').innerHTML = zh_subtitle;
+      document.getElementById('footer-text').innerHTML = zh_footer_text;
+      quotes = zh_quotes;
+    } else {
+      document.getElementById('title').innerHTML = en_title;
+      document.getElementById('main-title').innerHTML = en_main_title;
+      document.getElementById('subtitle').innerHTML = en_subtitle;
+      document.getElementById('footer-text').innerHTML = en_footer_text;
+      quotes = en_quotes;
+    }
 
     // Randomly select a quote
     var randomIndex = Math.floor(Math.random() * quotes.length);
