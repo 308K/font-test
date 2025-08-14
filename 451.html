@@ -34,7 +34,7 @@
       font-family: "Parisienne", "Liu Jian Mao Cao", cursive;
       font-weight: 400;
       font-style: normal;
-      font-size: 24px;
+      font-size: 32px;
     }
   </style>
 </head>
@@ -84,13 +84,13 @@
     var quotes;
 
     if (lang.startsWith('zh')) {
-      document.getElementById('title').innerHTML = zh_title;
+      document.title = zh_title;
       document.getElementById('main-title').innerHTML = zh_main_title;
       document.getElementById('subtitle').innerHTML = zh_subtitle;
       document.getElementById('footer-text').innerHTML = zh_footer_text;
       quotes = zh_quotes;
     } else {
-      document.getElementById('title').innerHTML = en_title;
+      document.title = en_title;
       document.getElementById('main-title').innerHTML = en_main_title;
       document.getElementById('subtitle').innerHTML = en_subtitle;
       document.getElementById('footer-text').innerHTML = en_footer_text;
